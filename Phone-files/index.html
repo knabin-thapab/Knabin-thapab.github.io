@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Special For You</title>
 
-  <!-- External script -->
+  <!-- External script from Deka Tutorial -->
   <script src="https://dekatutorial.github.io/flwr/s.js"></script>
 
   <style>
@@ -45,12 +45,11 @@
   </div>
 
   <script>
-    // Remove any Deka Tutorial watermark/footer dynamically
-    const observer = new MutationObserver(() => {
+    // Option 1: Hide watermark dynamically
+    setTimeout(() => {
       let elems = document.querySelectorAll('a[href*="dekatutorial"], #deka-tutorial, footer');
       elems.forEach(e => e.remove());
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
+    }, 1000); // waits 1 second for s.js to load and remove watermark
 
     // Romantic message and music
     let ucapan = `Karu ❤️
@@ -58,14 +57,14 @@ you are like the princess of my dreams.
 My days feel incomplete without you, and your smile steals my heart 😘.
 Love you forever karu❤️`;
 
-    let musik = `music.mp3`; // Add your music file in the same folder
+    let musik = `music.mp3`; // put your music file in the same folder
     let nomorWhatsapp = ``;   // optional
     let idTelegram = ``;      // optional
 
     // Initialize the Deka Tutorial function
     DekaTutorial(ucapan, musik, nomorWhatsapp, idTelegram);
 
-    // Auto-play music on first click
+    // Auto-play music on first click (bypasses browser restrictions)
     let audioPlayed = false;
     window.addEventListener('click', () => {
       if(!audioPlayed) {
