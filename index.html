@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Special For You</title>
 
+  <!-- External script -->
+  <script src="https://dekatutorial.github.io/flwr/s.js"></script>
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #ffe6f0;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+    .open {
+      cursor: pointer;
+      text-align: center;
+      font-size: 1.5rem;
+      color: #ff1a75;
+    }
+    .open i {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 10px;
+      animation: heartbeat 1s infinite;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="open">
+    <i>❤️</i>
+    <span>Open my heart (Karu)</span>
+  </div>
+
+  <script>
+    // Remove any Deka Tutorial watermark/footer dynamically
+    const observer = new MutationObserver(() => {
+      let elems = document.querySelectorAll('a[href*="dekatutorial"], #deka-tutorial, footer');
+      elems.forEach(e => e.remove());
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Romantic message and music
+    let ucapan = `Karu ❤️
+you are like the princess of my dreams. 
+My days feel incomplete without you, and your smile steals my heart 😘.
+Love you forever karu❤️`;
+
+    let musik = `music.mp3`; // Add your music file in the same folder
+    let nomorWhatsapp = ``;   // optional
+    let idTelegram = ``;      // optional
+
+    // Initialize the Deka Tutorial function
+    DekaTutorial(ucapan, musik, nomorWhatsapp, idTelegram);
+
+    // Auto-play music on first click
+    let audioPlayed = false;
+    window.addEventListener('click', () => {
+      if(!audioPlayed) {
+        let audio = new Audio(musik);
+        audio.play();
+        audioPlayed = true;
+      }
+    });
+  </script>
+</body>
+</html>
