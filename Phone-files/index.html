@@ -5,25 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Special For You</title>
 
-  <!-- External script from Deka Tutorial -->
+  <!-- External DekaTutorial script -->
   <script src="https://dekatutorial.github.io/flwr/s.js"></script>
 
   <style>
     body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
+      height: 100vh;
       background: #ffe6f0;
       font-family: 'Arial', sans-serif;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
     .open {
       cursor: pointer;
       text-align: center;
       font-size: 1.5rem;
       color: #ff1a75;
+      z-index: 10;
+      position: relative;
     }
     .open i {
       font-size: 2rem;
@@ -35,6 +38,41 @@
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.2); }
     }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(-45deg);
+      left: 50%;
+      bottom: 0;
+      animation: floatUp 4s linear infinite;
+      z-index: 5;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+    .heart::after {
+      left: 10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 1; }
+      100% { transform: translateX(calc(-50px + 100px * var(--rand))) translateY(-600px) rotate(-45deg); opacity: 0; }
+    }
   </style>
 </head>
 
@@ -45,34 +83,45 @@
   </div>
 
   <script>
-    // Option 1: Hide watermark dynamically
+    // Remove watermark
     setTimeout(() => {
       let elems = document.querySelectorAll('a[href*="dekatutorial"], #deka-tutorial, footer');
       elems.forEach(e => e.remove());
-    }, 1000); // waits 1 second for s.js to load and remove watermark
+    }, 1000);
 
     // Romantic message and music
     let ucapan = `Karu ❤️
 you are like the princess of my dreams. 
 My days feel incomplete without you, and your smile steals my heart 😘.
 Love you forever karu❤️`;
+    let musik = `music.mp3`; // add your music here
+    DekaTutorial(ucapan, musik, '', '');
 
-    let musik = `music.mp3`; // put your music file in the same folder
-    let nomorWhatsapp = ``;   // optional
-    let idTelegram = ``;      // optional
-
-    // Initialize the Deka Tutorial function
-    DekaTutorial(ucapan, musik, nomorWhatsapp, idTelegram);
-
-    // Auto-play music on first click (bypasses browser restrictions)
+    // Play music on first click
     let audioPlayed = false;
     window.addEventListener('click', () => {
-      if(!audioPlayed) {
+      if(!audioPlayed){
         let audio = new Audio(musik);
         audio.play();
         audioPlayed = true;
       }
     });
+
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.setProperty('--rand', Math.random());
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 4000);
+    }
+
+    // Generate hearts continuously
+    setInterval(createHeart, 300); // every 0.3 seconds
   </script>
 </body>
 </html>
